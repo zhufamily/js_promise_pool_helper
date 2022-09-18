@@ -35,6 +35,21 @@ poolPromise(3, myparams, myPromiseFunct, mycallback).then((result) => {
 });
 ```
 
+## Some Explanations
+
+Most things are straight-forward and self-explanatory, you just start the function with the following parameters
+- limit of parallel runners
+- an array of parameters for the promise function
+- promise function, which handles actual work
+- callback for progress
+
+The single result has the following elements
+- element[0] input parameters
+- element[1] status -- success or fail
+- element[2] reult (if status is success) or error (if status is error) 
+
+The final / accumulated results is an array of single results
+
 ## License
 
 Free software, absolutely no warranty, use at your own risk!
