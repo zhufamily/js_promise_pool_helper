@@ -18,12 +18,12 @@ async function myPromiseFunct(mymsg, mynum) {
             resolve(mymsg);
         }, 500);
     });
-}
+};
 
 function mycallback(currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
     console.log(currentResult);
-}
+};
 
 myparams = [['apple', 1], ['pear', 2], ['orange', 3],
     ['banana', 4], ['melon', 5], ['lemon', 6]];
@@ -32,7 +32,7 @@ poolPromise(3, myparams, myPromiseFunct, mycallback).then((result) => {
     console.log(result);
 }, (reason) => {
     console.log(reason);
-})
+});
 ```
 
 ## License
