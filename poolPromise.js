@@ -1,8 +1,10 @@
 /*
- * A helper function to run large number of promises in a pool with limited parallel running slot
+ * A helper function to run large number of promises in a pool with limited parallel running slots
  * As soon as one slot is available, another promise waiting in the queue will start automatically
  * Everytime a promise run completed there will be an optional callback function to notify progress
  * When all runners are completed the function will always return success with all results for the promises
+ * Result is in array format element[0] is input parameters, element[1] is status -- success or fail, 
+ * and elemnt[2] is result (if status is success) or error (if result is fail) from your promise function
  *
  * @function poolPromise
  * @param {number} poolLimit Limit for concurrect runners
@@ -23,7 +25,7 @@ async function poolPromise(poolLimit, paramArray, promiseFunction, progressCallb
             reject('paramArray is not an array');
         if(paramArray.length === 0)
             reject('paramArray has no elements');
-        // Check promise function is valie -- function with promise return
+        // Check promise function is valid -- function with promise return
         if (!typeof promiseFunction === 'function')
             reject('promiseFunction is not function');
         if (!typeof promiseFunction === 'object' || !typeof promiseFunction.then === 'function')
@@ -96,6 +98,7 @@ async function poolPromise(poolLimit, paramArray, promiseFunction, progressCallb
         };
        
 		// start runners for the initial available slots
+		// if there are more slots then runners, then all runners will be started parallel
         for(let i = 0; i <= pos && i <= len; i++) {
             wrapPromiseFunction(paramArray[i]);
         }
