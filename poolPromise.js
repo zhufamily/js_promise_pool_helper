@@ -94,8 +94,8 @@ async function poolPromise(poolLimit, paramArray, promiseFunction, progressCallb
                 });
 			}
         };
-       
-		// start runners for the initial available spots
+	
+	// start runners for the initial available spots
         for(let i = 0; i <= pos && i <= len; i++) {
             wrapPromiseFunction(paramArray[i]);
         }
