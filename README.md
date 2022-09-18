@@ -8,7 +8,7 @@ It has been tested against the latest Chrome, Edge and Node V8 engine.
 
 ## Samples
 
-Running a promise in pool mode with limits to 3 runners max
+Running promises in a pool mode with three runners max
 
 ```sh
 async function myPromiseFunct(mymsg, mynum) {
