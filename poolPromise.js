@@ -79,23 +79,23 @@ async function poolPromise(poolLimit, paramArray, promiseFunction, progressCallb
         * @param {any} paramLocal Params for promise runner
         */
         function wrapPromiseFunction(paramLocal) {
-          // multiple or single arguments for promise runner
+			// multiple or single arguments for promise runner
             if(isparamArray) {
-               promiseFunction(...paramLocal).then((result) => {
+				promiseFunction(...paramLocal).then((result) => {
                     handlePromise(paramLocal, 'success', result);
                 }, (reason) => {
                     handlePromise(paramLocal, 'fail', reason);
                 });
-   } else {
-       promiseFunction(paramLocal).then((result) => {
+			} else {
+				promiseFunction(paramLocal).then((result) => {
                     handlePromise(paramLocal, 'success', result);
                 }, (reason) => {
                     handlePromise(paramLocal, 'fail', reason);
                 });
-   }
+			}
         };
        
-   // start runners for the initial available spots
+		// start runners for the initial available spots
         for(let i = 0; i <= pos && i <= len; i++) {
             wrapPromiseFunction(paramArray[i]);
         }
