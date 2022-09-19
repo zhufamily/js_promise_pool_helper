@@ -34,7 +34,7 @@ myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
     console.log(currentResult);
 	
-    // Uncomment the section below, if you want to see how stop flag working
+    // Uncomment the section below, if you want to see how stop flag works
     /*
     if (currentPosition === 1) {
         myrunner.stop();
@@ -47,6 +47,22 @@ myrunner.runPool().then((result) => {
 }, (reason) => {
     console.log(JSON.stringify(reason));
 });
+
+// Uncomment the section below, if you want to see how async / await works
+/*
+async function main() {
+	try {
+		let result = await myrunner.runPool();
+		console.log('Success');
+		console.log(JSON.stringify(result));	
+	} catch(e) {
+		console.log('Error');
+		console.log(JSON.stringify(e));
+	}
+}
+
+main();
+*/
 
 ```
 
