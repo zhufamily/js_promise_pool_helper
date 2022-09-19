@@ -6,6 +6,10 @@ Add the poolPromise.js file to your web project, node project and etc.
 
 It has been tested against the latest Chrome, Edge and Node V8 engine.
 
+## Release Notes
+- Added stop flag
+- Convert to class structure
+
 ## Samples
 
 Running promises in a pool mode with three runners max
@@ -13,35 +17,46 @@ Running promises in a pool mode with three runners max
 ```sh
 async function myPromiseFunct(mymsg, mynum) {
     return new Promise((resolve, reject) => {
-        setTimeout(function() {
-            console.log(mymsg);
+        setTimeout(function () {
+            console.log(`${new Date().getTime()}`);
             resolve(mymsg);
         }, 500);
     });
 };
 
-function mycallback(currentPosition, totalLength, currentResult) {
+myparams = [['apple', 1], ['pear', 2], ['orange', 3],
+    ['banana', 4], ['melon', 5], ['lemon', 6],
+    ['lime', 7], ['peach', 8], ['grape', 9]];
+
+let myrunner = new PromisePool(2, myparams, myPromiseFunct);
+
+myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
     console.log(currentResult);
-};
 
-myparams = [['apple', 1], ['pear', 2], ['orange', 3],
-    ['banana', 4], ['melon', 5], ['lemon', 6]];
-
-poolPromise(3, myparams, myPromiseFunct, mycallback).then((result) => {
-    console.log(result);
-}, (reason) => {
-    console.log(reason);
+    if (currentPosition === 1) {
+        myrunner.stop();
+    }
 });
+
+myrunner.runPool().then((result) => {
+    console.log(JSON.stringify(result));
+}, (reason) => {
+    console.log(JSON.stringify(reason));
+});
+
 ```
 
 ## Some Explanations
 
-Most things are straight-forward and self-explanatory, you just start the function with the following parameters
+Most things are straight-forward and self-explanatory, you just compose the class with the following parameters
 - limit of parallel runners
 - an array of parameters for the promise function
 - promise function, which handles actual work
-- callback for progress
+- optional callback for progress
+
+Also you can setup a progress callback after the class is initialized
+When runners are still in progress, you can set up stop flag to terminate the execution 
 
 The single result has the following elements
 - element[0] input parameters
