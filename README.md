@@ -8,7 +8,7 @@ It has been tested against the latest Chrome, Edge and Node V8 engine.
 
 ## Release Notes
 - Added stop flag
-- Convert to class structure
+- Converted to class structure
 
 ## Samples
 
