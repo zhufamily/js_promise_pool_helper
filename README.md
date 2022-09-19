@@ -51,14 +51,14 @@ myrunner.runPool().then((result) => {
 // Uncomment the section below, if you want to see how async / await works
 /*
 async function main() {
-	try {
-		let result = await myrunner.runPool();
-		console.log('Success');
-		console.log(JSON.stringify(result));	
-	} catch(e) {
-		console.log('Error');
-		console.log(JSON.stringify(e));
-	}
+    try {
+        let result = await myrunner.runPool();
+        console.log('Success');
+        console.log(JSON.stringify(result));	
+    } catch(e) {
+        console.log('Error');
+        console.log(JSON.stringify(e));
+    }
 }
 
 main();
