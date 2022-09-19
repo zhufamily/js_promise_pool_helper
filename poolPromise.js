@@ -8,11 +8,11 @@
  * @property {Boolean} stopped - Boolean flag for stop
  */
 class PromisePool {
-     # poolLimit;
-     # paramArray;
-     # promiseFunction;
-     # progessCallback;
-     # stopped;
+    #poolLimit;
+    #paramArray;
+    #promiseFunction;
+    #progessCallback;
+    #stopped;
 
     /**
      * @constructor
@@ -38,15 +38,15 @@ class PromisePool {
         if (!typeof progessCallback === 'undefined' && !typeof progessCallback === 'function')
             throw 'progessCallback is not a function';
 
-        this. # poolLimit = poolLimit;
-        this. # paramArray = paramArray;
-        this. # promiseFunction = promiseFunction;
+        this.#poolLimit = poolLimit;
+        this.#paramArray = paramArray;
+        this.#promiseFunction = promiseFunction;
 
         if (typeof progessCallback === 'function') {
-            this. # progessCallback = progessCallback;
+            this.#progessCallback = progessCallback;
         }
 
-        this. # stopped = false;
+        this.#stopped = false;
     }
 
     /**
@@ -58,7 +58,7 @@ class PromisePool {
     onProgress = function (progessCallback) {
         if (!typeof progessCallback === 'function')
             throw 'progessCallback is not a function';
-        this. # progessCallback = progessCallback;
+        this.#progessCallback = progessCallback;
     }
 
     /**
@@ -67,7 +67,7 @@ class PromisePool {
      * @function stop
      */
     stop = function () {
-        this. # stopped = true;
+        this.#stopped = true;
     };
 
     /**
@@ -78,7 +78,7 @@ class PromisePool {
     runPool = async function () {
         return new Promise((resolve, reject) => {
             // Zero based all length for runners
-            let len = this. # paramArray.length - 1;
+            let len = this.#paramArray.length - 1;
             // Zero based current position for the runner
             let pos = 0;
             // One based in progress runners
@@ -88,9 +88,9 @@ class PromisePool {
             // Accumuldated results
             let results = [];
 			// Whether parameters for Promise function is array
-            let isparamArray = Array.isArray(this. # paramArray[0]) ? true : false;
+            let isparamArray = Array.isArray(this.#paramArray[0]) ? true : false;
             // Whether progress callback function present
-			let hasCallback = typeof this. # progessCallback === 'function' ? true : false;
+			let hasCallback = typeof this.#progessCallback === 'function' ? true : false;
 
             /**
              * Handle when one runner instance is done
@@ -117,20 +117,20 @@ class PromisePool {
                 completed++;
 
                 if (hasCallback) {
-                    this. # progessCallback(completed - 1, len, localResults);
+                    this.#progessCallback(completed - 1, len, localResults);
                 }
 
-                if (pos <= len && this. # stopped === false) {
-                    wrapPromiseFunction(this. # paramArray[pos]);
+                if (pos <= len && this.#stopped === false) {
+                    wrapPromiseFunction(this.#paramArray[pos]);
                     pos++;
                 } else {
                     runner--;
-                    if (runner == 0 && this. # stopped === false) {
+                    if (runner == 0 && this.#stopped === false) {
                         resolve({
                             'status': 'Completed',
                             'result': results
                         });
-                    } else if (runner == 0 && this. # stopped === true) {
+                    } else if (runner == 0 && this.#stopped === true) {
                         reject({
                             'status': 'stopped',
                             'result': results
@@ -147,13 +147,13 @@ class PromisePool {
              */
             let wrapPromiseFunction = function (paramLocal) {
                 if (isparamArray) {
-                    this. # promiseFunction(...paramLocal).then((result) => {
+                    this.#promiseFunction(...paramLocal).then((result) => {
                         handlePromise(paramLocal, 'success', result);
                     }, (reason) => {
                         handlePromise(paramLocal, 'fail', reason);
                     });
                 } else {
-                    this. # promiseFunction(paramLocal).then((result) => {
+                    this.#promiseFunction(paramLocal).then((result) => {
                         handlePromise(paramLocal, 'success', result);
                     }, (reason) => {
                         handlePromise(paramLocal, 'fail', reason);
@@ -163,8 +163,8 @@ class PromisePool {
             .bind(this);
 
             // Start parallel running promises with pool limits or param array length, whichever is smaller
-            for (let i = 0; i < this. # poolLimit && i <= len; i++) {
-                wrapPromiseFunction(this. # paramArray[i]);
+            for (let i = 0; i < this.#poolLimit && i <= len; i++) {
+                wrapPromiseFunction(this.#paramArray[i]);
                 runner++;
                 pos++;
             }
