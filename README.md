@@ -28,7 +28,7 @@ myparams = [['apple', 1], ['pear', 2], ['orange', 3],
     ['banana', 4], ['melon', 5], ['lemon', 6],
     ['lime', 7], ['peach', 8], ['grape', 9]];
 
-let myrunner = new PromisePool(2, myparams, myPromiseFunct);
+let myrunner = new PromisePool(3, myparams, myPromiseFunct);
 
 myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
