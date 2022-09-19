@@ -87,8 +87,10 @@ class PromisePool {
             let completed = 0;
             // Accumuldated results
             let results = [];
+			// Whether parameters for Promise function is array
             let isparamArray = Array.isArray(this. # paramArray[0]) ? true : false;
-            let hasCallback = typeof this. # progessCallback === 'function' ? true : false;
+            // Whether progress callback function present
+			let hasCallback = typeof this. # progessCallback === 'function' ? true : false;
 
             /**
              * Handle when one runner instance is done
@@ -135,8 +137,7 @@ class PromisePool {
                         });
                     }
                 }
-            }
-            .bind(this);
+            }.bind(this);
 
             /**
              * A wrapper function for Promise allow continuing when a slot is available
@@ -168,6 +169,5 @@ class PromisePool {
                 pos++;
             }
         });
-    }
-    .bind(this);
+    }.bind(this);
 };
