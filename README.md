@@ -34,12 +34,12 @@ myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
     console.log(currentResult);
 	
-	// Uncomment the section below, if you do not want to see stop flag working
-	/*
+    // Uncomment the section below, if you want to see how stop flag working
+    /*
     if (currentPosition === 1) {
         myrunner.stop();
     }
-	*/
+    */
 });
 
 myrunner.runPool().then((result) => {
