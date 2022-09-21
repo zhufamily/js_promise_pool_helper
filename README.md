@@ -15,25 +15,26 @@ It has been tested against the latest Chrome, Edge and Node V8 engine.
 Running promises in a pool mode with three runners max
 
 ```sh
-async function myPromiseFunct(mymsg, mynum) {
+
+myPromiseFunct = function (mymsg, mynum) {
     return new Promise((resolve, reject) => {
-        setTimeout(function () {
+        setTimeout(function() {
             console.log(`${new Date().getTime()}`);
             resolve(mymsg);
         }, 500);
     });
 };
 
-myparams = [['apple', 1], ['pear', 2], ['orange', 3],
+let myparams = [['apple', 1], ['pear', 2], ['orange', 3],
     ['banana', 4], ['melon', 5], ['lemon', 6],
     ['lime', 7], ['peach', 8], ['grape', 9]];
 
 let myrunner = new PromisePool(3, myparams, myPromiseFunct);
 
-myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
+myrunner.onProgress(function(currentPosition, totalLength, currentResult) {
     console.log(`POS: ${currentPosition}; LEN ${totalLength}`);
     console.log(currentResult);
-	
+    
     // Uncomment the section below, if you want to see how stop flag works
     /*
     if (currentPosition === 1) {
@@ -42,7 +43,8 @@ myrunner.onProgress(function (currentPosition, totalLength, currentResult) {
     */
 });
 
-myrunner.runPool().then((result) => {
+myrunner.runPool().then((result) =>
+{
     console.log(JSON.stringify(result));
 }, (reason) => {
     console.log(JSON.stringify(reason));
@@ -53,17 +55,16 @@ myrunner.runPool().then((result) => {
 async function main() {
     try {
         let result = await myrunner.runPool();
-        console.log('Success');
-        console.log(JSON.stringify(result));	
+	console.log('Success');
+	console.log(JSON.stringify(result));	
     } catch(e) {
         console.log('Error');
-        console.log(JSON.stringify(e));
+	console.log(JSON.stringify(e));
     }
 }
 
 main();
 */
-
 ```
 
 ## Some Explanations
