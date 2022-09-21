@@ -75,7 +75,7 @@ class PromisePool {
      *
      * @function runPool
      */
-    runPool = async function () {
+    runPool = function () {
         return new Promise((resolve, reject) => {
             // Zero based all length for runners
             let len = this.#paramArray.length - 1;
@@ -87,10 +87,10 @@ class PromisePool {
             let completed = 0;
             // Accumuldated results
             let results = [];
-			// Whether parameters for Promise function is array
+	    // Whether parameters for Promise function is array
             let isparamArray = Array.isArray(this.#paramArray[0]) ? true : false;
             // Whether progress callback function present
-			let hasCallback = typeof this.#progessCallback === 'function' ? true : false;
+	    let hasCallback = typeof this.#progessCallback === 'function' ? true : false;
 
             /**
              * Handle when one runner instance is done
@@ -114,11 +114,11 @@ class PromisePool {
                 localResults.push(resultStatus);
                 localResults.push(resultValue);
                 results.push(localResults);
-                completed++;
 
                 if (hasCallback) {
-                    this.#progessCallback(completed - 1, len, localResults);
-                }
+                    this.#progessCallback(completed , len, localResults);
+                }                
+                completed++;
 
                 if (pos <= len && this.#stopped === false) {
                     wrapPromiseFunction(this.#paramArray[pos]);
@@ -159,8 +159,7 @@ class PromisePool {
                         handlePromise(paramLocal, 'fail', reason);
                     });
                 }
-            }
-            .bind(this);
+            }.bind(this);
 
             // Start parallel running promises with pool limits or param array length, whichever is smaller
             for (let i = 0; i < this.#poolLimit && i <= len; i++) {
